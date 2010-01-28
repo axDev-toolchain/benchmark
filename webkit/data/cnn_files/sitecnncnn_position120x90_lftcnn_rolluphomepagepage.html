@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+<script>
+        function cnnad_getTld (hostname)
+        {
+               var data = hostname.split(".");
+               if (data.length >= 2)
+               {
+                       return (data[data.length-2] + "." + data[data.length-1]);
+               }
+               return(null);
+        }
+ 
+        var cnnDocDomain = cnnad_getTld(location.hostname);
+        if(cnnDocDomain) {document.domain = cnnDocDomain;}
+
+	function cnnGetId(query) {
+		var keyValPairs = query.split('&');
+		if(!keyValPairs) {
+			keyValPairs = new Array();
+			keyValPairs[keyValPairs.length]=query;
+		}
+		for(var counter=0; counter < keyValPairs.length;counter++) {
+			var keyVal = keyValPairs[counter].split('=');
+			if(keyVal[0]=='domId') {
+				//alert("returning id: " + keyVal[1]);
+				return keyVal[1];
+			}
+		}
+	}
+			
+	function cnnSendData2() {
+		var docId = cnnGetId(decodeURIComponent(location.pathname.substring(9)));
+		var height = 90;
+		var width = 283;
+		top.cnnad_showAd(docId);
+		if ((height > 0)&&(width > 0))
+		{
+			top.cnnad_setAdSize(docId,height,width);
+		}
+	}
+</script> 
+<style type="text/css" media="screen">
+@import url(http://i.cdn.turner.com/cnn/.element/css/2.0/common.css);
+</style><style type="text/css">
+.cnnBelT1AdImg
+{float:left;display:inline;margin:0 12px 6px 9px;}
+* html .cnnBelT1AdImg
+{margin-right:9px;}
+.cnnBelT1AdDesc
+{margin:0;font-size:12px;line-height:14px;padding-bottom:2px;font-weight:normal;color:#949494;}
+.cnnBelT1AdBull ul
+{margin: 0 0 0 142px;padding:0;list-style:none;clear:none;}
+.cnnBelT1AdBull ul li
+{padding-left:5px;font-size:10px;line-height:14px;background: url(http://i.cdn.turner.com/cnn/.element/img/2.0/global/gray_bull.gif) no-repeat left 5px;margin:0;}
+.cnnBelT1AdBull ul li a
+{font-weight:bold;}
+* html .cnnBelT1AdBull ul li
+{padding-left:3px;}
+</style></head><body style="background-color: transparent;" onload="cnnSendData2()">
+<!--FlightID: 183513-->
+
+
+<div class="cnnBelT1AdImg"><a href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183513&amp;AdID=263657&amp;TargetID=54333&amp;Segments=730,2278,2743,3030,3285,6041,6298,8463,8796,9496,9685,9779,9781,9853,10381,13760,15105,16113,18517,18672,18961,18982,20139,20804,21371,21497,21717,21848,21869,21887,22006,22082&amp;Values=1588&amp;Redirect=http://www.cnn.com/tshirt/" target="_blank"><img src="sitecnncnn_position120x90_lftcnn_rolluphomepagepage_data/321817cnn_inauguration_120x90_v3.gif" alt="" border="0" height="90" width="120"></a></div>
+<div class="cnnBelT1AdDesc">CNN Shirt</div>
+<div class="cnnBelT1AdBull">
+            <ul>
+                        <li><a href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183513&amp;AdID=263657&amp;TargetID=54333&amp;Segments=730,2278,2743,3030,3285,6041,6298,8463,8796,9496,9685,9779,9781,9853,10381,13760,15105,16113,18517,18672,18961,18982,20139,20804,21371,21497,21717,21848,21869,21887,22006,22082&amp;Values=1588&amp;Redirect=http://www.cnn.com/tshirt/" target="_blank">Every historic event</a></li>
+<a href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183513&amp;AdID=263657&amp;TargetID=54333&amp;Segments=730,2278,2743,3030,3285,6041,6298,8463,8796,9496,9685,9779,9781,9853,10381,13760,15105,16113,18517,18672,18961,18982,20139,20804,21371,21497,21717,21848,21869,21887,22006,22082&amp;Values=1588&amp;Redirect=http://www.cnn.com/tshirt/" target="_blank">			</a><li><a href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183513&amp;AdID=263657&amp;TargetID=54333&amp;Segments=730,2278,2743,3030,3285,6041,6298,8463,8796,9496,9685,9779,9781,9853,10381,13760,15105,16113,18517,18672,18961,18982,20139,20804,21371,21497,21717,21848,21869,21887,22006,22082&amp;Values=1588&amp;Redirect=http://www.cnn.com/tshirt/" target="_blank">Deserves a good shirt</a></li>
+			<li><a href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183513&amp;AdID=263657&amp;TargetID=54333&amp;Segments=730,2278,2743,3030,3285,6041,6298,8463,8796,9496,9685,9779,9781,9853,10381,13760,15105,16113,18517,18672,18961,18982,20139,20804,21371,21497,21717,21848,21869,21887,22006,22082&amp;Values=1588&amp;Redirect=http://www.cnn.com/tshirt/" target="_blank">Go to inaugural store</a></li>
+            </ul>
+</div>
+<img src="sitecnncnn_position120x90_lftcnn_rolluphomepagepage_data/TypecountClientType2ASegAModAdID263657FlightID183513TargetID.gif" border="0" height="1" width="1">
+</body></html>

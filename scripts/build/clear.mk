@@ -1,0 +1,11 @@
+TARGET :=
+target_srcs :=
+target_prefix :=
+target_local_includes :=
+target_local_android_includes :=
+target_local_cflags :=
+target_local_ldflags :=
+target_local_android_static_libs :=
+target_local_android_shared_libs :=
+target_local_static_libs :=
+target_local_shared_libs :=

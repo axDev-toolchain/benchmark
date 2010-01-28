@@ -1,0 +1,121 @@
+All scripts for building/running/measuring benchmark in Android Benchmark Suite
+must be placed in this directory. This README describes the usage of the scripts
+for different purpose. $TOP denotes the top directory of the Android Benchmark
+Suite (This README file is on $TOP/scripts/README).
+
+###########################################
+# Build and run a benchmark
+###########################################
+
+The main script to build and run a benchmark is $TOP/scripts/bench.py.
+Command must be executed under individual benchmark directory. For example,
+if we want to test skia benchmark.
+
+$cd $TOP/skia
+
+## clean
+$../scripts/bench.py --action=clean
+
+## build benchmark
+$../scripts/bench.py --action=build --toolchain=<Android toolchain path>
+--mute=off --android_branch=eclair
+
+## run
+$adb shell rm -r /data/local/perflab
+$adb shell mkdir /data/local/perflab
+$adb push out/skia_bench /data/local/perflab
+$adb shell /data/local/perflab/skia_bench  // test run
+$adb shell rm -r /data/local/perflab
+
+To get all options of bench.py, use "./bench.py --help".
+
+
+###########################################
+# Query various information of a benchmark
+###########################################
+
+The main script to do the query is still $TOP/scripts/bench.py.
+Command must be executed under individual benchmark directory. For example,
+if we want to query the webkit benchmark.
+
+$ cd $TOP/webkit
+
+## which file perflab should measure the size
+$../scripts/bench.py --action=getsize
+out/libwebcore.so
+
+## which files perflab should copy to Andriod device before run the benchmark
+$../scripts/bench.py --action=export
+out/libwebcore.so out/webkit_bench
+
+## What command perflab should issue to run the benchmark
+$../scripts/bench.py --action=runcmd
+echo Android_TIME_STAMP_$(timestamp); LD_LIBRARY_PATH=/data/local/perflab /data/local/perflab/webkit_bench -d800x2400 -r40 file:///sdcard/perflab_input/cnn.html; echo Android_TIME_STAMP_$(timestamp)
+
+When you see the command, you should do
+$adb -s <device serial number> shell 'echo Android_TIME_STAMP_$(timestamp); LD_LIBRARY_PATH=/data/local/perflab /data/local/perflab/webkit_bench -d800x2400 -r40 file:///sdcard/perflab_input/cnn.html; echo Android_TIME_STAMP_$(timestamp)'
+
+Then you will see on the screen
+Android_TIME_STAMP_1233617919.25
+virtual void WebCore::Widget::show()
+virtual void WebCore::Widget::show()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+virtual void WebCore::Widget::show()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+static bool WebCore::ResourceHandle::supportsBufferedData()
+...
+Android_TIME_STAMP_1233617931.40
+
+The time number is in seconds.
+
+
+###########################################
+# Get timestamp
+###########################################
+
+timestamp is an Android command line tool to report the current time in seconds.
+To build the tool, enter the timestamp directory and type
+$../bench.py --action=build --toolchain=<Android toolchain path>
+Push out/timestamp to /system/bin on Android device.
+Then you are able to call timestamp to report time stamp in seconds.
+
+
+###########################################
+# Compute the generated code size
+###########################################
+
+There are several scripts used to compute the compiler generated code size.
+
+## To compute the gcc generated code size of each function from one source
+## file, type
+$../scripts/size/gcccount.py timestamp.s
+out_digits   size  56    inst_count 18
+main   size  56    inst_count 19
+
+## To compute the gcc generated thumb2 code size of each function from one
+## source file, type
+$ ../size/countthumb2.py obj/timestamp.o
+main 60
+out_digits 56
+
+## To compute the gcc generated code size of each file, type
+$../scripts/size/counttree.py .
+..
+timestamp 112 4972
+TOTAL   112 4972
+
+## To compute the rvct generated code size of each function, type
+$../scripts/size/rvct/rvctcount.py timestamp.txt
+out_digits   size  56    count 18
+main    size  56    count 19
+
+## To compute the rvct generated code size of each file, type
+$../scripts/size/rvct/counttree.py obj
+..
+timestamp.txt 112 4972
+TOTAL    112 4972
+

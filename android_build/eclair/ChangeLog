@@ -1,0 +1,25 @@
+### The files in this directory are either directly copied from Android eclair
+### tree, or built from Android eclair tree by prebuilt gcc-4.4.0 toolchain,
+### except the following changes.
+
+bionic/libc/arch-arm/include/machine/_types.h
+bionic/libc/arch-arm/include/machine/limits.h
+bionic/libc/include/sys/limits.h
+system/core/include/arch/linux-arm/AndroidConfig.h
+ChangeLog
+  Modify these header files to make the benchmark work with rvct.
+  Owner: carrot
+
+external/icu4c/common/cstring.h
+external/icu4c/common/cstring.icu4c.h
+  Rename cstring.h to cstring.icu4c.h. There is a header file named as
+  CString.h in webcore source tree. When compiled by rvct under windows,
+  #include "CString.h" can match both files, but rvct always includes the
+  wrong file. Since cstring.h is not widely used, I renamed it to
+  cstring.icu4c.h. If we found any new benchmarks use this file, we should
+  revert this CL and look for better method.
+  Owner: carrot
+
+external/freetype/include/freetype/config/ftconfig.h
+  Conditional compile the gcc inline assembler, it is compiler dependent.
+  Owner: carrot

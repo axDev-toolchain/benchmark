@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+<script>
+        function cnnad_getTld (hostname)
+        {
+               var data = hostname.split(".");
+               if (data.length >= 2)
+               {
+                       return (data[data.length-2] + "." + data[data.length-1]);
+               }
+               return(null);
+        }
+ 
+        var cnnDocDomain = cnnad_getTld(location.hostname);
+        if(cnnDocDomain) {document.domain = cnnDocDomain;}
+
+	function cnnGetId(query) {
+		var keyValPairs = query.split('&');
+		if(!keyValPairs) {
+			keyValPairs = new Array();
+			keyValPairs[keyValPairs.length]=query;
+		}
+		for(var counter=0; counter < keyValPairs.length;counter++) {
+			var keyVal = keyValPairs[counter].split('=');
+			if(keyVal[0]=='domId') {
+				//alert("returning id: " + keyVal[1]);
+				return keyVal[1];
+			}
+		}
+	}
+			
+	function cnnSendData2() {
+		var docId = cnnGetId(decodeURIComponent(location.pathname.substring(9)));
+		var height = 280;
+		var width = 336;
+		top.cnnad_showAd(docId);
+		if ((height > 0)&&(width > 0))
+		{
+			top.cnnad_setAdSize(docId,height,width);
+		}
+	}
+</script> 
+<style type="text/css" media="screen">
+        @import url(http://i.cdn.turner.com/cnn/.element/css/2.0/common.css);
+</style></head><body style="background-color: transparent;" onload="cnnSendData2()">
+<!--FlightID: 66953-->
+<!-- BEGIN CREATIVE -->
+
+<script type="text/javascript">
+	google_ad_client = (top.location.search.indexOf('refresh=1') >= 0) ? 'ca-cnn-refresh_js' : 'ca-cnn-home_js';
+	google_ad_channel = (top.location.search.indexOf('refresh=1') >= 0) ? 'news' : 'homepage';
+        google_ad_output = 'js';
+        google_max_num_ads = '3';
+        google_page_url = top.location;
+        google_ad_type = 'text';
+        google_language = 'en';
+        google_encoding = 'utf8';
+        google_safe = 'high';
+        google_adtest = 'off';
+
+        /* the google call back function */
+        function google_ad_request_done (google_ads)
+        {
+                if (google_ads.length === 0)
+                {
+                        return;
+                }
+
+                // main container div for all the ads
+                var container = document.createElement('div');
+                container.className = 'cnnWireAdLtgBox';
+                container.style.height = '280px';
+                container.style.minHeight = '280px';
+                document.body.appendChild(container);
+
+                // the inner box 
+                var box = document.createElement('div');
+                box.className = 'cnnBoxContent';
+                box.style.height = '280px';
+                box.style.minHeight = '280px';
+                container.appendChild(box);
+
+                // the adbox
+                var ads = document.createElement('div');
+                ads.className = 'cnnAdLinksRR'; 
+                if (google_ads.length === 1)
+                {
+                        ads.id = 'cnnAdvLinks1Ad';
+                }
+                else if (google_ads.length === 2)
+                {
+                        ads.id = 'cnnAdvLinks2Ads';
+                }
+                else
+                {
+                        ads.id = 'cnnAdvLinks3Ads';
+                }
+                box.appendChild(ads);
+
+                // the ad box heading
+                var h = document.createElement('div');
+                h.className = 'cnnHtAdvertHead';
+                h.innerHTML = 'Ads by Google';
+                ads.appendChild(h);
+
+                // the actual ads go here
+                var adlist = document.createElement('div');
+                ads.appendChild(adlist);
+
+                // now add in all the ads.
+                var ad;
+                for (var i = 0; i < google_ads.length; i++)
+                {
+                        ad = google_ad_create_elem(google_ads[i]);
+                        adlist.appendChild(ad);
+                }
+        }
+
+        /* helper function to create DOM elements for Google ads */
+        function google_ad_create_elem (google_ad)
+        {
+                // Google encodes their URL, so we can't use it as-is.
+                google_ad.url = google_ad.url.replace(/&amp;/g,"&");
+
+                // create the main div to hold the entire ad
+                var d = document.createElement('div');
+                d.className = 'cnnHtAdvertLnks';
+
+                // the heading (line1) of the ad
+                var h = document.createElement('span');
+                h.className = 'cnnHtAdvertTitle';
+                h.innerHTML = google_ad.line1;
+                h.onmouseover = function () { 
+                                        window.status = google_ad.visible_url;
+                                        this.style.cursor = document.all ? 'hand' : 'pointer';
+                };
+                h.onclick = function () { window.open(google_ad.url); };
+                h.onmouseout = function () { window.status = ''; this.style.cursor = 'auto'; };
+                d.appendChild(h);
+
+                // line break after the heading
+                var br1 = document.createElement('br');
+                d.appendChild(br1);
+
+                // insert the rest of the lines in the ad (line2 + line3)
+                var t = document.createElement('span');
+                t.innerHTML = google_ad.line2 + ' ' + google_ad.line3;
+                d.appendChild(t);
+
+                // add a line break after the main body of ad
+                var br2 = document.createElement('br');
+                d.appendChild(br2);
+
+                // link up the URL
+                var a = document.createElement('a');
+                var i = document.createTextNode(google_ad.visible_url);
+                a.target = "_blank";
+                a.href = google_ad.url;
+                a.onmouseover = function () { window.status = google_ad.visible_url; return true; };
+                a.appendChild(i);
+                d.appendChild(a);
+
+                return d;
+        }
+</script>
+<script type="text/javascript" src="sitecnncnn_pagetypemaincnn_position336x280_adlinkscnn_rolluphome/show_ads.js"></script><script src="sitecnncnn_pagetypemaincnn_position336x280_adlinkscnn_rolluphome/test_domain.js"></script><script>window.google_render_ad();</script><script language="JavaScript1.1" src="sitecnncnn_pagetypemaincnn_position336x280_adlinkscnn_rolluphome/ads"></script><div style="height: 280px; min-height: 280px;" class="cnnWireAdLtgBox"><div style="height: 280px; min-height: 280px;" class="cnnBoxContent"><div id="cnnAdvLinks3Ads" class="cnnAdLinksRR"><div class="cnnHtAdvertHead">Ads by Google</div><div><div class="cnnHtAdvertLnks"><span class="cnnHtAdvertTitle">Online Coupon Codes</span><br><span>Save now @ 3200+ Brand Name Stores Over 20000 Codes: CouponAlbum</span><br><a href="http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=B0PiGK6B2SdvVB5HGqgPK_pDEApCv-2SUx8qcCbL9sNoH0PAzEAEYASCg-c0JKAM4AFC_-vWlA2DJ7u2GyKOgGYgBAbIBC3d3dy5jbm4uY29tyAEB2gETaHR0cDovL3d3dy5jbm4uY29tL4ACAagDAegDZOgD7QL1AwQEAAT1AwQAAACYBAA&amp;num=1&amp;adurl=http://www.couponalbum.com&amp;client=ca-cnn-home_js" target="_blank">www.CouponAlbum.com</a></div><div class="cnnHtAdvertLnks"><span class="cnnHtAdvertTitle">Free Grocery Coupons</span><br><span>Free Coupons for 1,000s top brands! Save money free printable coupons.</span><br><a href="http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=B1Bi1K6B2SdvVB5HGqgPK_pDEAuWnpoUB7YO-sAnAjbcB4KcSEAIYAiCg-c0JKAM4AFDFha2AB2DJ7u2GyKOgGYgBAaAB9bbk_gOyAQt3d3cuY25uLmNvbcgBAdoBE2h0dHA6Ly93d3cuY25uLmNvbS-AAgHIAuv7iASoAwHoA2ToA-0C9QMEBAAE9QMEAAAAmAQA&amp;num=2&amp;adurl=http://discounts.shopathome.com/Discounts_And_Coupons/Default-GroceryCoupons.aspx%3Frefer%3D76082%26src%3DSEPDSE&amp;client=ca-cnn-home_js" target="_blank">www.ShopAtHome.com</a></div><div class="cnnHtAdvertLnks"><span class="cnnHtAdvertTitle">100% Free KFC® Meal</span><br><span>Free KFC® Chicken Offer Expires Today!</span><br><a href="http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=B8W63K6B2SdvVB5HGqgPK_pDEApavznLS9u76CMCNtwGA8QQQAxgDIKD5zQkoAzgAUOTpAmDJ7u2GyKOgGYgBAaAB5M6P_QOyAQt3d3cuY25uLmNvbcgBAdoBE2h0dHA6Ly93d3cuY25uLmNvbS-oAwHoA2ToA-0C9QMEBAAE9QMEAAAAmAQA&amp;num=3&amp;adurl=http://www.freebiesandyou.net/landing/lp/19402&amp;client=ca-cnn-home_js" target="_blank">www.kentuckyfriedcruelty.com</a></div></div></div></div></div>
+<!-- END CREATIVE -->
+<img src="sitecnncnn_pagetypemaincnn_position336x280_adlinkscnn_rolluphome/TypecountClientType2ASegAModAdID206124FlightID66953TargetID1.gif" border="0" height="1" width="1">
+</body></html>

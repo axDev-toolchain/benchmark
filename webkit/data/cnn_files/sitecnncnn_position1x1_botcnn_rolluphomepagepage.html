@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+<script>
+        function cnnad_getTld (hostname)
+        {
+               var data = hostname.split(".");
+               if (data.length >= 2)
+               {
+                       return (data[data.length-2] + "." + data[data.length-1]);
+               }
+               return(null);
+        }
+ 
+        var cnnDocDomain = cnnad_getTld(location.hostname);
+        if(cnnDocDomain) {document.domain = cnnDocDomain;}
+
+	function cnnGetId(query) {
+		var keyValPairs = query.split('&');
+		if(!keyValPairs) {
+			keyValPairs = new Array();
+			keyValPairs[keyValPairs.length]=query;
+		}
+		for(var counter=0; counter < keyValPairs.length;counter++) {
+			var keyVal = keyValPairs[counter].split('=');
+			if(keyVal[0]=='domId') {
+				//alert("returning id: " + keyVal[1]);
+				return keyVal[1];
+			}
+		}
+	}
+			
+	function cnnSendData2() {
+		var docId = cnnGetId(decodeURIComponent(location.pathname.substring(9)));
+		var height = 1;
+		var width = 1;
+		top.cnnad_showAd(docId);
+		if ((height > 0)&&(width > 0))
+		{
+			top.cnnad_setAdSize(docId,height,width);
+		}
+	}
+</script></head><body style="background-color: transparent;" onload="cnnSendData2()">
+<!--FlightID: 183611-->
+<a target="_blank" href="http://ads.cnn.com/event.ng/Type=click&amp;FlightID=183611&amp;AdID=254970&amp;TargetID=2742&amp;Segments=730,2592,2743,3030,3285,6298,8463,8796,9496,9779,9781,9853,10381,13153,13760,15022,16113,18517,18672,18961,18982,20139,21371,21497,21717,22006,22082&amp;Targets=1095,2742,1515,24516,28114&amp;Values=30,62,82,100,150,682,686,917,1163,1285,1588,1601,1604,1678,1690,1696,2677,4405,4418,4452,44138,47457,51073,52263,52507,52897,56058,56872,57005,57006&amp;RawValues=&amp;Redirect=http://www.cnn.com"><img src="sitecnncnn_position126x31_spon2cnn_rolluphomepagepage_data/2855151x1.gif" border="0" height="1" width="1"></a>
+</body></html>

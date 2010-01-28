@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+<script>
+        function cnnad_getTld (hostname)
+        {
+               var data = hostname.split(".");
+               if (data.length >= 2)
+               {
+                       return (data[data.length-2] + "." + data[data.length-1]);
+               }
+               return(null);
+        }
+ 
+        var cnnDocDomain = cnnad_getTld(location.hostname);
+        if(cnnDocDomain) {document.domain = cnnDocDomain;}
+
+	function cnnGetId(query) {
+		var keyValPairs = query.split('&');
+		if(!keyValPairs) {
+			keyValPairs = new Array();
+			keyValPairs[keyValPairs.length]=query;
+		}
+		for(var counter=0; counter < keyValPairs.length;counter++) {
+			var keyVal = keyValPairs[counter].split('=');
+			if(keyVal[0]=='domId') {
+				//alert("returning id: " + keyVal[1]);
+				return keyVal[1];
+			}
+		}
+	}
+			
+	function cnnSendData2() {
+		var docId = cnnGetId(decodeURIComponent(location.pathname.substring(9)));
+		var height = 280;
+		var width = 336;
+		top.cnnad_showAd(docId);
+		if ((height > 0)&&(width > 0))
+		{
+			top.cnnad_setAdSize(docId,height,width);
+		}
+	}
+</script></head><body style="background-color: transparent;" onload="cnnSendData2()">
+<!--FlightID: 187304-->
+<iframe src="sitecnncnn_position336x280_rgtcnn_rolluphomepagepage_data/TypeclickFlightID187304AdID261005TargetID913Segments7302259.html" marginwidth="0" marginheight="0" hspace="0" vspace="0" bordercolor="#000000" frameborder="0" height="280" scrolling="no" width="336">
+&lt;SCRIPT language='JavaScript1.1'
+SRC="http://ad.doubleclick.net/adj/N3691.CNN.com/B3025330.10;abr=!ie;sz=336x280;click=http://ads.cnn.com/event.ng/Type=click&amp;FlightID=187304&amp;AdID=261005&amp;TargetID=913&amp;Segments=730,2259,2401,2743,3030,3285,3431,3744,3800,5880,6089,6298,8463,8796,9496,9779,9781,9853,10381,12942,13087,13088,13090,13303,13305,13760,14888,14978,15608,16113,16337,17373,18517,18672,18887,18901,18904,18961,18982,19698,19723,20139,20197,20273,20806,20950,21283,21310,21371,21497,21717,21849,21926,21964,21981,22006,22082,22120&amp;Values=1588&amp;Redirect=;ord=cnxKbos,bexnibjiprfci?"&gt;
+&lt;/SCRIPT&gt;
+</iframe>
+<div style="position: absolute; visibility: hidden;"><img src="sitecnncnn_position336x280_rgtcnn_rolluphomepagepage_data/TypecountClientType2ASegAModAdID261005FlightID187304TargetID.gif" border="0" height="1" width="1"></div>
+</body></html>

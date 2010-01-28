@@ -1,0 +1,25 @@
+$adb shell /data/local/perflab/skia_bench
+running bench decode_4444_(null)
+running bench decode_565_(null)
+running bench decode_8888_(null)
+running bench repeatTile_index8
+running bench  repeatTile_4444
+running bench   repeatTile_565
+running bench  repeatTile_8888
+running bench    bitmap_index8
+running bench  bitmap_index8_A
+running bench      bitmap_4444
+running bench    bitmap_4444_A
+running bench       bitmap_565
+running bench      bitmap_8888
+running bench    bitmap_8888_A
+running bench          polygon
+running bench            lines
+running bench           points
+running bench          rrects3
+running bench          rrects1
+running bench           ovals3
+running bench           ovals1
+running bench           rects3
+running bench           rects1
+
