@@ -160,20 +160,23 @@ static int setgroupsIntarray(ArrayObject* gidArray)
     gid_t *gids;
     u4 i;
     s4 *contents;
+    int result;
 
     if (gidArray == NULL) {
         return 0;
     }
 
     /* just in case gid_t and u4 are different... */
-    gids = alloca(sizeof(gid_t) * gidArray->length);
+    gids = malloc(sizeof(gid_t) * gidArray->length);
     contents = (s4 *)gidArray->contents;
 
     for (i = 0 ; i < gidArray->length ; i++) {
         gids[i] = (gid_t) contents[i];
     }
 
-    return setgroups((size_t) gidArray->length, gids);
+    result = setgroups((size_t) gidArray->length, gids);
+    free(gids);
+    return result;
 }
 
 /*
@@ -429,4 +432,3 @@ const DalvikNativeMethod dvm_dalvik_system_Zygote[] = {
         Dalvik_dalvik_system_Zygote_forkSystemServer },
     { NULL, NULL, NULL },
 };
-

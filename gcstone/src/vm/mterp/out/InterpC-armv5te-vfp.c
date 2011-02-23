@@ -1199,6 +1199,7 @@ GOTO_TARGET_DECL(exceptionThrown);
 /* File: armv5te/debug.c */
 #include <inttypes.h>
 
+#ifndef ANDROID_FDO
 /*
  * Dump the fixed-purpose ARM registers, along with some other info.
  *
@@ -1233,6 +1234,7 @@ void dvmMterpDumpArmRegs(uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3)
     //printf("    + next handler for 0x%02x = %p\n",
     //    rINST & 0xff, dvmAsmInstructionStart + (rINST & 0xff) * 64);
 }
+#endif
 
 /*
  * Dump the StackSaveArea for the specified frame pointer.
