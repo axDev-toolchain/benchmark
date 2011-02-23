@@ -1,9 +1,11 @@
+#!/usr/bin/python
+
 # This script counts the instruction size of armcc generated generated
 # annotated assembler files. Those files should be compiled with options
 # --asm --interleave. All .txt files under the specified path will be
 # processed.
-# This script can only work under windows system.
-# This file and rvctcount.py should be placed at c:\.
+# This script is tested only in windows and mac system.
+# You may need to convert it with dos2unix or unix2dos before using it.
 
 import sys, os
 
@@ -22,13 +24,15 @@ def constructfilename(dirname, fname):
     return " "
   path = ""
   if len(dirname) > prefix_len:
-    path = dirname[prefix_len+1:] + "\\"
+    path = dirname[prefix_len+1:] + os.sep
   return path+fname
 
 def countfile(dirname, name, data, objsize):
   filename = constructfilename(dirname, name)
-  cmd = "c:\\Python26\\python.exe c:\\rvctcount.py "
-  cmd = cmd + dirname + "\\" + name + " > count.tmp"
+  cmd = "c:\\rvctcount.py "
+  if sys.platform != "win32":
+    cmd = "rvctcount.py "
+  cmd = cmd + dirname + os.sep + name + " > count.tmp"
   os.system(cmd)
   tmpfile = open("count.tmp", "r")
   for line in tmpfile:
@@ -42,11 +46,11 @@ def countfile(dirname, name, data, objsize):
 
 def   enum_file(data,   dirname,   names):  
   for   name   in   names:
-    if os.path.isfile(dirname+"\\"+name):
+    if os.path.isfile(dirname+os.sep+name):
       root, ext = os.path.splitext(name)
       if ext == ".txt":
         objfile = root + ".o"
-        objsize = os.path.getsize(dirname+"\\"+objfile)
+        objsize = os.path.getsize(dirname+os.sep+objfile)
         countfile(dirname, name, data, objsize)
         sys.stderr.write(".")
 

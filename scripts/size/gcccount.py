@@ -19,6 +19,7 @@ PSEUDO_INSTS = {
     '.protected':0,
     '.weak':0,
     '.thumb_set':0,
+    '.ident':0,
 }
 
 def keyfunc(tuple):
@@ -161,6 +162,9 @@ def main():
     inst_size = inst_size + 2
 
   fd.close()
+  if in_func:
+    in_func = False
+    functions.append((func_name, inst_size, inst_count, data_size))
 
   if armv7 and have_thumb:
     # This file contains thumb2 codes, it is difficult to count the

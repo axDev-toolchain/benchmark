@@ -18,7 +18,7 @@ def main():
     return
 
   tmpfile = os.path.join(tempfile.gettempdir(), "android_benchmark")
-  cmd = "readelf -s " + sys.argv[1] + " > " + tmpfile
+  cmd = "readelf -s -W " + sys.argv[1] + " > " + tmpfile
   os.system(cmd)
 
   functions = []

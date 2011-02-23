@@ -6,6 +6,7 @@ ADD_CFLAGS :=
 ADD_LDFLAGS :=
 DISABLE_CFLAGS :=
 FDO_BUILD :=
+VALID_FOR_CHROMEOS :=
 
 ## using android_root/branch
 android_branch_cap := $(shell echo $(ANDROID_BRANCH) | tr '[a-z]' '[A-Z]')

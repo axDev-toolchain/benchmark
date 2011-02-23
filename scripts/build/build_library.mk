@@ -11,7 +11,7 @@ $(local_obj_dir)/$(TARGET): MY_SONAME := $(TARGET)
 $(local_obj_dir)/$(TARGET): $(c_arm_objs) $(c_thumb_objs) $(cpp_arm_objs) $(cpp_thumb_objs) $(asm_all_objs) $(LOCAL_STATIC_LIBS) $(LOCAL_SHARED_LIBS_FILES)
 	@echo "LINK SHARED LIBRARY: $@"
 	$(echo) mkdir -p $(dir $@)
-	$(echo) $(ANDROID_LINKER) -nostdlib -Wl,-soname,$(MY_SONAME) \
+	$(echo) $(LINKER) -nostdlib -Wl,-soname,$(MY_SONAME) \
 		$(LDFLAGS) $(ADD_LDFLAGS) \
 		-Wl,-T,$(android_config_path)/armelf.xsc \
 		-Wl,--gc-sections -Wl,-shared,-Bsymbolic $^ \
@@ -42,7 +42,7 @@ else
 $(local_out_dir)/$(TARGET): $(c_arm_objs) $(c_thumb_objs) $(cpp_arm_objs) $(cpp_thumb_objs) $(asm_all_objs)
 	@echo "LINK STATIC: $@"
 	$(echo) mkdir -p $(dir $@)
-	$(echo) $(ANDROID_AR) $(AR_MAKE_ARCHIVE_FLAGS) $@ $^
+	$(echo) $(AR) $(AR_MAKE_ARCHIVE_FLAGS) $@ $^
 
 endif
 

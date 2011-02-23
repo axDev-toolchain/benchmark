@@ -1,8 +1,11 @@
+#!/usr/bin/python
+
 # count the number of instructions in rvct compiler's output
 # the rvct's command line should be
 # armcc --asm --interleave foo.c
 # then the foo.txt can be used as input to this script
-# This script has only been tested under windows.
+# This script has only been tested under windows and mac.
+# You may need to convert it with dos2unix or unix2dos before using it.
 
 import sys
 
@@ -83,6 +86,9 @@ def main():
       data_size = data_size + 4
       continue
     if line[0] != '0':
+      continue
+    if len(words) == 2:
+      data_size = data_size + len(words[1]) / 2
       continue
     if len(words) < 3:
       continue

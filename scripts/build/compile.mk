@@ -1,4 +1,12 @@
-GLOBAL_ANDROID_INCLUDES := $(patsubst %,-I$(android_root)/%,$($(android_branch_cap)_GCC_INCLUDES))
+ifeq ($(COMPILER_TYPE),chromeos-gcc)
+   # Check validity of benchmark for chromeos. This is done here since this is the earliest common place it can be done 
+   ifneq ($(VALID_FOR_CHROMEOS),1)
+     $(error "$(TARGET) is unsupported for ChromeOS.")
+   endif
+   GLOBAL_INCLUDES :=
+else
+   GLOBAL_INCLUDES := $(patsubst %,-I$(android_root)/%,$($(android_branch_cap)_GCC_INCLUDES))
+endif
 LOCAL_INCLUDES := $(target_local_includes:%=-I %)
 
 LDFLAGS := $(target_local_ldflags)
@@ -18,7 +26,7 @@ LOCAL_SHARED_LIBS := $(if $(target_local_shared_libs),-L$(local_out_dir) $(targe
 LOCAL_SHARED_LIBS += $(if $(target_local_android_shared_libs),-L$(android_shared_libs) $(target_local_android_shared_libs:lib%=-l%),)
 LOCAL_SHARED_LIBS_FILES := $(target_local_shared_libs:%=$(local_out_dir)/%.so)
 
-ALL_LOCAL_FLAGS_PRE := $(COMPILER_SPECIFIC_OPTIONS_PRE) $(GLOBAL_ANDROID_INCLUDES) $(LOCAL_INCLUDES) $(CFLAGS)
+ALL_LOCAL_FLAGS_PRE := $(COMPILER_SPECIFIC_OPTIONS_PRE) $(GLOBAL_INCLUDES) $(LOCAL_INCLUDES) $(CFLAGS)
 ALL_LOCAL_FLAGS_AFR := $(LOCAL_CFLAGS) $(COMPILER_SPECIFIC_OPTIONS_POST)
 
 ## Filter out default flags that we don't want
@@ -39,7 +47,7 @@ $(asm_all_objs): MY_FLAGS := $(ALL_LOCAL_FLAGS_PRE) $(DEFAULT_THUMB_OPT) $(ALL_L
 $(asm_all_objs): $(local_obj_dir)/%.o: $(local_src_dir)/%.S
 	$(echo) mkdir -p $(dir ./$@)
 	@echo "ASM $@ <= $^"
-	$(echo) $(ANDROID_GCC) $(MY_FLAGS) -c -o $@ $^
+	$(echo) $(CC) $(MY_FLAGS) -c -o $@ $^
 
 ####################
 ## compile c
@@ -61,13 +69,13 @@ $(c_thumb_objs): MY_FLAGS := $(ALL_LOCAL_FLAGS_PRE) $(DEFAULT_THUMB_OPT) $(ALL_L
 $(c_thumb_objs): $(local_obj_dir)/%.o: $(local_src_dir)/%.c
 	$(echo) mkdir -p $(dir ./$@)
 	@echo "C THUMB $@ <= $^"
-	$(echo) $(ANDROID_GCC) $(MY_FLAGS) -c -o $@ $^
+	$(echo) $(CC) $(MY_FLAGS) -c -o $@ $^
 
 $(c_arm_objs): MY_FLAGS := $(ALL_LOCAL_FLAGS_PRE) $(DEFAULT_ARM_OPT) $(ALL_LOCAL_FLAGS_AFR)
 $(c_arm_objs): $(local_obj_dir)/%.o: $(local_src_dir)/%.c
 	$(echo) mkdir -p $(dir ./$@)
 	@echo "C ARM $@ <= $^"
-	$(echo) $(ANDROID_GCC) $(MY_FLAGS) -c -o $@ $^
+	$(echo) $(CC) $(MY_FLAGS) -c -o $@ $^
 
 ####################
 ## compile c++
@@ -89,10 +97,10 @@ $(cpp_thumb_objs): MY_FLAGS := $(ALL_LOCAL_FLAGS_PRE) $(DEFAULT_THUMB_OPT) $(CPP
 $(cpp_thumb_objs): $(local_obj_dir)/%.o: $(local_src_dir)/%.cpp
 	$(echo) mkdir -p $(dir ./$@)
 	@echo "CPP THUMB $@ <= $^"
-	$(echo) $(ANDROID_GXX) $(MY_FLAGS) -c -o $@ $^
+	$(echo) $(CXX) $(MY_FLAGS) -c -o $@ $^
 
 $(cpp_arm_objs): MY_FLAGS := $(ALL_LOCAL_FLAGS_PRE) $(DEFAULT_ARM_OPT) $(CPP_COMPILE_PLUS_FLAGS) $(ALL_LOCAL_FLAGS_AFR)
 $(cpp_arm_objs): $(local_obj_dir)/%.o: $(local_src_dir)/%.cpp
 	$(echo) mkdir -p $(dir ./$@)
 	@echo "CPP ARM $@ <= $^"
-	$(echo) $(ANDROID_GXX) $(MY_FLAGS) -c -o $@ $^
+	$(echo) $(CXX) $(MY_FLAGS) -c -o $@ $^

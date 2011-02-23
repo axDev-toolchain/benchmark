@@ -1,0 +1,10 @@
+This is a port of the unix time command from NetBSD 5.0.2.  The following files
+are from /usr/src
+
+src/ext.h:	/usr/src/usr.bin/time/ext.h
+src/main.c:	/usr/src/usr.bin/time/time.c
+src/strpct.c:	/usr/src/bin/csh/strpct.c
+src/time.c:	/usr/src/bin/csh/time.c
+
+Some of the files are modified to be buildable with the Android tool-chain.
+Local modifications are annotated with /* ANDROID LOCAL */ comments.

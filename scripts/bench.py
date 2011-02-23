@@ -87,8 +87,9 @@ def ParseOptions(argv):
 
   return ok
 
-def RunCmd(cmdline):
-  print cmdline
+def RunCmd(cmdline, silent=False):
+  if not silent:
+    print cmdline
   ret = subprocess.call(cmdline, shell=True)
   if ret == 0:
     return ret
@@ -196,7 +197,7 @@ def main(argv):
     my_dict["vars"] = (make_dict["vars"] + " SKIP_PRELINKING=1" +
                        " FDO_BUILD=1 ADD_CFLAGS=\"%s\" ADD_LDFLAGS=\"%s\"" % \
                        (set_opts.get("add_cflags","") +
-                        " -fprofile-generate=/data/local/profile/"
+                        " -ftest-coverage -fprofile-generate=/data/local/profile/"
                         " -DANDROID_FDO",
                         set_opts.get("add_ldflags","") +
                         " -fprofile-generate=/data/local/profile/"
@@ -212,7 +213,12 @@ def main(argv):
         run_fdo_device = "--emulator"
       else:
         run_fdo_device = "--s %s" % set_opts["serial"]
-    ret = RunCmd("../run_on_android.py %s --fdo-run" % run_fdo_device)
+    ret = RunCmd("%s/scripts/run_on_android.py %s --fdo-run"
+		 % (top_path, run_fdo_device))
+    if ret != 0: return ret
+
+    # keep the original *.gcno files.
+    ret = RunCmd("mv obj obj2")
     if ret != 0: return ret
 
     # now we have FDO output in ./fdo/ -- clean up and move it to obj dir
@@ -241,7 +247,9 @@ def main(argv):
     return ret
   else:
     cmd = _MAKE_CMD_TEMPLATE % (make_dict)
-    ret = RunCmd(cmd)
+    # For runcmd, export and getsize, we do not want to print the command.
+    silent = set_opts["action"] in ("runcmd", "export", "getsize")
+    ret = RunCmd(cmd, silent)
     if ret != 0: return ret
 
     if set_opts["action"] == "build":
