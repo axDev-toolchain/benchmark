@@ -1,0 +1,11 @@
+This benchmark is ported from the open source image library
+  http://sourceforge.net/projects/cximage/
+Modifications to the library includes:
+
+1. Remove exception handling code, change them to explicitly condition checks.
+
+2. Add an alpha blending method
+  void CxImage?::MixFrom(CxImage?& imgsrc, int src_alpha=255, int x=0, int y=0);
+
+3. Add a benchmark driver bench/main.cpp.
+
